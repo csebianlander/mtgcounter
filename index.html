@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>M:tG Life Counter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="mtgcounter.css">
+	<link href="https://fonts.googleapis.com/css?family=Spectral:400,600" rel="stylesheet">
+</head>
+<body>
+
+<div id="menuContainer">
+	<h1>Life Total Counter</h1>
+	<h2>For <em><a href="http://magic.wizards.com" title="MAGIC: THE GATHERING" target="_blank">Magic: the Gathering</a></em></h2>
+	<hr>
+	<p>How many players?</p>
+		<div>
+			<button class="playerCountBtn selected">Two</button>
+			<button class="playerCountBtn">Three</button>
+			<button class="playerCountBtn">Four</button>
+		</div>
+		<div>
+			<button id="playNowBtn">Play Now</button>
+			<button id="customBtn">Customize</button>
+		</div>
+
+	<p class="disclaimer">All symbols and terms owned by <a href="http://company.wizards.com/" title="Wizards of the Coast" target="_blank">Wizards of the Coast</a>. I just made this thing for fun.</p>
+</div>
+
+
+
+<div id="choiceContainer" class="hidden">
+	<!-- <h2 id="customPlayerH2">gaerh</h2> -->
+	<label class="nameLabel"><input type="text" name="playerName" value="Player 1"></label>
+	<label class="lifeLabel"><input type="number" name="startingLife" value=20></label>
+	<button id="playerDone">Ready to Play</button>
+	<h3>Click to customize icon and color</h3>
+	<div id="choiceIconPicker"><img id="symbolImg" src="img/w.png"></div>
+	<div id="choiceColorPicker"> </div>
+
+</div>
+
+
+
+<div id="playContainer" class="hidden">
+	<span class="row">
+		<div class="playerBox" id="boxP1" onclick="changeLife(event,0)">
+			<p class="pLife noselect">20</p>
+			<h3 class="pName noselect">Player 1</h3>
+		</div>
+		<div class="playerBox" id="boxP2" onclick="changeLife(event,1)">
+			<p class="pLife noselect">20</p>
+			<h3 class="pName noselect">Player 2</h3>
+		</div>
+	</span>
+	<span class="row">
+		<div class="playerBox" id="boxP3" onclick="changeLife(event,2)">
+			<p class="pLife noselect">20</p>
+			<h3 class="pName noselect">Player 3</h3>
+		</div>
+		<div class="playerBox" id="boxP4" onclick="changeLife(event,3)">
+			<p class="pLife noselect">20</p>
+			<h3 class="pName noselect">Player 4</h3>
+		</div>
+	</span>
+</div>
+
+
+<script type="text/javascript" src="mtgcounter.js"></script>
+</body>
+</html>
