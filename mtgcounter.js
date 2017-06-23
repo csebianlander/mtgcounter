@@ -1,6 +1,13 @@
+//arrays for image URLs and bg color values
 var symbolArray = ["img/w.png", "img/u.png", "img/b.png", "img/r.png", "img/g.png", "img/x.png"]; // w u b r g colorless
 var symbolTransparentArray = ["img/tr/w.png", "img/tr/u.png", "img/tr/b.png", "img/tr/r.png", "img/tr/g.png", "img/tr/x.png"]; // w u b r g colorless
 var bgColorArray = ["rgb(254, 251, 216)", "rgb(169, 224, 250)", "rgb(208, 208, 208)", "rgb(250, 169, 144)", "rgb(155, 210, 176)", "rgb(203, 161, 53)"]; //w u b r g gold
+
+//inits for global vars
+var numberOfPlayers;
+var playersSoFar;
+var players = [];
+var customPlayer = {};
 
 //DOM variables for screenspaces
 var menuContainer = document.querySelector("#menuContainer");
@@ -11,8 +18,8 @@ var playContainer = document.querySelector("#playContainer");
 var playerNameDisplays = document.querySelectorAll(".pName");
 var lifeTotalDisplays = document.querySelectorAll(".pLife");
 var playerCountButtons = document.querySelectorAll(".playerCountBtn");
-var customBtn = document.querySelector("#customBtn")
-var playNowBtn = document.querySelector("#playNowBtn")
+var customBtn = document.querySelector("#customBtn");
+var playNowBtn = document.querySelector("#playNowBtn");
 
 //DOM variables for customization screen
 var nameLabel = document.querySelector("input[type='text']");
@@ -22,16 +29,14 @@ var colorPicker = document.querySelector("#choiceColorPicker");
 var playerDone = document.querySelector("#playerDone");
 
 //DOM variables for play screen
-var p1Box = document.querySelector("#boxP1")
-var p2Box = document.querySelector("#boxP2")
-var p3Box = document.querySelector("#boxP3")
-var p4Box = document.querySelector("#boxP4")
-var playerBoxes = document.querySelectorAll(".playerBox")
-
-var numberOfPlayers;
-var playersSoFar;
-var players = [];
-var customPlayer = {};
+var p1Box = document.querySelector("#boxP1");
+var p2Box = document.querySelector("#boxP2");
+var p3Box = document.querySelector("#boxP3");
+var p4Box = document.querySelector("#boxP4");
+var playerBoxes = document.querySelectorAll(".playerBox");
+var zeroLifeOptions = document.querySelectorAll(".zeroLife");
+var resurrectButtons = document.querySelectorAll(".resBtn");
+var endGameBtns = document.querySelectorAll(".endGameBtn");
 
 function init() {
 	numberOfPlayers = 2;
@@ -86,20 +91,22 @@ function init() {
 
 	for (var i = 0; i < 4; i ++) {
 		playerBoxes[i].classList.remove("playerBox2p","playerBox3p","playerBox4p","flipdiv","hidden");
+		zeroLifeOptions[i].classList.add("hidden");
+		playerNameDisplays[i].style.color = "#333";
+		lifeTotalDisplays[i].classList.remove("pLife2P","pLife3P","pLife4P")
 	}
 }
 
 init();
 
 //Menu screen functionality
-
 playNowBtn.addEventListener("click", function(){
 	playScreen();
 });
 
 playerCountButtons.forEach(function(player, i) {
 	playerCountButtons[i].addEventListener("click", function(){
-		numberOfPlayers = i + 2;
+		numberOfPlayers = i + 2;	//button 0 sets to 2 players, button 1 to 3, etc
 		for (var b = 0; b < playerCountButtons.length; b++) {
 			playerCountButtons[b].classList.remove("selected");
 		}
@@ -116,6 +123,7 @@ playerDone.addEventListener("click", function(){
 		resetCustomToDefaults(playersSoFar);
 		customizeScreenInit(playersSoFar);
 	} else {
+		document.body.classList.remove("altBodyBG");
 		playScreen();
 	}
 });
@@ -134,6 +142,7 @@ function customizeScreenInit (whichPlayer) {
 	changeSymbol.src = symbolArray[whichPlayer];
 	colorPicker.style.backgroundColor = players[whichPlayer].background;
 	playerDone.style.backgroundColor = players[whichPlayer].background;
+	document.body.classList.toggle("altBodyBG");
 }
 
 function copyCustomToPlayer(whichPlayer) {
@@ -213,18 +222,27 @@ function initPlayScreen() {
 	if (numberOfPlayers === 2) {
 		playerBoxes[0].classList.add("playerBox2p","flipdiv");
 		playerBoxes[1].classList.add("playerBox2p");
+		lifeTotalDisplays[0].classList.add("pLife2P")
+		lifeTotalDisplays[1].classList.add("pLife2P")
 
 	} else if (numberOfPlayers === 3) {
 		playerBoxes[0].classList.add("playerBox3p");
 		playerBoxes[1].classList.add("playerBox3p","flipdiv");
 		playerBoxes[2].classList.add("playerBox3p");
 		playContainer.classList.add("player3Container");
+		lifeTotalDisplays[0].classList.add("pLife3P")
+		lifeTotalDisplays[1].classList.add("pLife3P")
+		lifeTotalDisplays[2].classList.add("pLife3P")	
 	
 	} else if (numberOfPlayers === 4) {
 		playerBoxes[0].classList.add("playerBox4p","flipdiv");
 		playerBoxes[1].classList.add("playerBox4p","flipdiv");
 		playerBoxes[2].classList.add("playerBox4p");
 		playerBoxes[3].classList.add("playerBox4p");
+		lifeTotalDisplays[0].classList.add("pLife4P")
+		lifeTotalDisplays[1].classList.add("pLife4P")
+		lifeTotalDisplays[2].classList.add("pLife4P")
+		lifeTotalDisplays[3].classList.add("pLife4P")	
 	}
 }
 
@@ -250,18 +268,17 @@ function changeLife(event, id) {
 				loseLife(id);
 			}			
 		}
-	} else {
-		playerNameDisplays[id].style.color = "#333";
-		init();
 	}
 }
 
 function addLife (i) {
+	flashColor(i, "green");
 	players[i].lifeTotal++;
 	lifeTotalDisplays[i].textContent = players[i].lifeTotal;
 }
 
 function loseLife (i) {
+	flashColor(i, "#800000");
 	players[i].lifeTotal--;
 	lifeTotalDisplays[i].textContent = players[i].lifeTotal;
 	checkIfDead(i);
@@ -270,9 +287,42 @@ function loseLife (i) {
 function checkIfDead(i) {
 	if (players[i].lifeTotal <= 0) { 
 		players[i].isAlive = false;
-		playerNameDisplays[i].textContent = players[i].name + " has lost the game. Click his or her life total to play again.";
-		playerNameDisplays[i].style.color = "#fff";
-		playerBoxes[i].style.backgroundImage = "none";
-		playerBoxes[i].style.background = "#000";
+		killPlayer(i);
 	}
+}
+
+function killPlayer(i) {
+	playerNameDisplays[i].textContent = players[i].name + " has died.";
+	zeroLifeOptions[i].classList.remove("hidden");
+	playerNameDisplays[i].style.color = "#fff";
+	playerBoxes[i].style.backgroundColor = "#222";
+}
+
+endGameBtns.forEach(function(player, i) {
+	endGameBtns[i].addEventListener("click", function(){
+		init();
+	});
+});
+
+resurrectButtons.forEach(function(player, i) {
+	resurrectButtons[i].addEventListener("click", function(){
+		revivePlayer(i);
+	});
+});
+
+function revivePlayer(i) {
+	addLife(i);
+	addLife(i); //have to do it twice because "resurrect" exists on left side, meaning clicking it ALSO triggers a loseLife()
+	players[i].isAlive = true;
+	playerNameDisplays[i].textContent = players[i].name;
+	zeroLifeOptions[i].classList.add("hidden");
+	playerNameDisplays[i].style.color = "#333";
+	playerBoxes[i].style.backgroundColor = players[i].background;
+}
+
+function flashColor (i, color) {
+	lifeTotalDisplays[i].style.color = color;
+	setTimeout(function(){
+		lifeTotalDisplays[i].style.color = "#333";
+	},40);
 }

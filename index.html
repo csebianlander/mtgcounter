@@ -30,7 +30,7 @@
 
 <div id="choiceContainer" class="hidden">
 	<!-- <h2 id="customPlayerH2">gaerh</h2> -->
-	<label class="nameLabel"><input type="text" name="playerName" value="Player 1"></label>
+	<label class="nameLabel"><input type="text" name="playerName" value="Player 1" maxlength="20"></label>
 	<label class="lifeLabel"><input type="number" name="startingLife" value=20></label>
 	<button id="playerDone">Ready to Play</button>
 	<h3>Click to customize icon and color</h3>
@@ -46,20 +46,36 @@
 		<div class="playerBox" id="boxP1" onclick="changeLife(event,0)">
 			<p class="pLife noselect">20</p>
 			<h3 class="pName noselect">Player 1</h3>
+			<div class="zeroLife">
+				<button class="resBtn">Revive</button>
+				<button class="endGameBtn">Restart</button>
+			</div>
 		</div>
 		<div class="playerBox" id="boxP2" onclick="changeLife(event,1)">
 			<p class="pLife noselect">20</p>
 			<h3 class="pName noselect">Player 2</h3>
+			<div class="zeroLife">
+				<button class="resBtn">Revive</button>
+				<button class="endGameBtn">Restart</button>
+			</div>
 		</div>
 	</span>
 	<span class="row">
 		<div class="playerBox" id="boxP3" onclick="changeLife(event,2)">
 			<p class="pLife noselect">20</p>
 			<h3 class="pName noselect">Player 3</h3>
+			<div class="zeroLife">
+				<button class="resBtn">Revive</button>
+				<button class="endGameBtn">Restart</button>
+			</div>
 		</div>
 		<div class="playerBox" id="boxP4" onclick="changeLife(event,3)">
 			<p class="pLife noselect">20</p>
 			<h3 class="pName noselect">Player 4</h3>
+			<div class="zeroLife">
+				<button class="resBtn">Revive</button>
+				<button class="endGameBtn">Restart</button>
+			</div>
 		</div>
 	</span>
 </div>

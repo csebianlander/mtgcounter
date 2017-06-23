@@ -1,15 +1,7 @@
-/* MTG Color RGB (backgrounds)
-white	rgb (254, 251, 216)		#fefbd8
-blue 	rgb (169, 224, 250)		#a9e0fa
-black	rgb (208, 208, 208)		#d0d0d0
-red		rgb (250, 169, 144)		#faa990
-green	rgb (155, 210, 176)		#9bd2b0
-gold	rgb (203, 161, 53)		#cba135
-
-
-*/
+/* global styles */
 
 body {
+	overflow:hidden;
 	vertical-align:top;
 	margin: 0;
 	border: 0;
@@ -17,6 +9,10 @@ body {
 	font-family: Spectral, sans-serif;
 	background:#333;
 	color:#eee;
+}
+
+.altBodyBG {
+	background: #444;
 }
 
 a {
@@ -47,24 +43,21 @@ img {
     height: auto;
 }
 
-button.playerCountBtn {
-	border:none;
-	margin:none;
-	background:none;
-	outline:none;
-	font-family: Spectral, sans-serif;
-	font-size: 1.25em;
+div {
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
 }
 
-button#playNowBtn, button#customBtn {
+button {
 	border:none;
 	margin:none;
 	background:none;
 	outline:none;
 	font-family: Spectral, sans-serif;
-	font-size: 1.5em;
-	color: #fefbd8;
 }
+
+/* menu screen styles */
 
 #menuContainer {
 	text-align:center;
@@ -72,13 +65,24 @@ button#playNowBtn, button#customBtn {
 	margin: 0 auto;
 }
 
-div.hidden {
+div.hidden {	
 	display:none;
 }
 
 button.selected {
 	background:#cba135;
 }
+
+button.playerCountBtn {
+	font-size: 1.25em;
+}
+
+#playNowBtn, #customBtn {
+	font-size: 1.5em;
+	color: #fefbd8;
+}
+
+/* choice screen styles */
 
 #choiceContainer {
 	text-align:center;
@@ -111,6 +115,8 @@ label {
 	display:block;
 	text-align:center;
 	color: #fefbd8;
+	margin-left: 12.5vw;
+	width:75vw;
 }
 
 input {
@@ -118,15 +124,18 @@ input {
 	border:none;
 	border-top:1px solid #cba135;
 	border-bottom:1px solid #cba135;
-	margin:2px;
+	margin: 5px 0;
 	padding:none;
 	background:none;
 	outline:none;
 	font-family: Spectral, sans-serif;
-	font-size: 2em;
+	font-size: 1.75em;
 	text-align:center;
 	color: #fff;
+	width:100%;
 }
+
+/* play screen styles */
 
 #playContainer {
 	vertical-align:top;
@@ -169,19 +178,37 @@ input {
 
 .pLife {
 	text-align: center;
-	font-size: 10em;
 	text-shadow: 0 0 10px #fff;
 	color: #333;
 	margin:0;
 	padding:0;
-	padding-top:20vh;
-	line-height:50%;
+	padding-top:15vh;
+	line-height:60%;
+}
+
+.pLife2P {
+	font-size: 35vh;
+}
+
+.pLife3P {
+	font-size: 25vw;
+}
+
+.pLife4P {
+	font-size: 25vh;
 }
 
 .pName {
 	color: #333;
 	text-shadow: 0 0 5px #fff;	
+	line-height: 110%;
+	margin-bottom:0;
 }
+
+.zeroLife {
+	text-align:center;
+}
+
 
 .flipdiv {
     -moz-transform: rotate(180deg);
@@ -199,4 +226,10 @@ input {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.resBtn, .endGameBtn {
+	font-style: italic;
+	font-size: 1.3em;
+	color: #eee;
 }
