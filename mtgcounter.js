@@ -38,8 +38,8 @@ var zeroLifeOptions = document.querySelectorAll(".zeroLife");
 var resurrectButtons = document.querySelectorAll(".resBtn");
 var endGameBtns = document.querySelectorAll(".endGameBtn");
 
-function init() {
-	numberOfPlayers = 2;
+function init(e) {
+	numberOfPlayers = e;
 	playersSoFar = 0;
 
 	players = [
@@ -97,10 +97,11 @@ function init() {
 	}
 }
 
-init();
+init(2);
 
 //Menu screen functionality
 playNowBtn.addEventListener("click", function(){
+	init(numberOfPlayers);
 	playScreen();
 });
 
